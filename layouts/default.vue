@@ -20,7 +20,7 @@
     <v-footer
       app
     >
-      <span>Footer</span>
+      <span>©RLettuce</span>
     </v-footer>
   </v-app>
 </template>
