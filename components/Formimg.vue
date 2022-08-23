@@ -7,3 +7,9 @@
     </div>
   </form>
 </template>
+
+<script>
+export default {
+  name: "FormImg"
+}
+</script>
