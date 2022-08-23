@@ -13,3 +13,7 @@ export default {
   name: "FormImg"
 }
 </script>
+
+<style scoped>
+
+</style>
