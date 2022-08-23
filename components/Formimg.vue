@@ -1,7 +1,9 @@
 <template>
   <form>
     <div>
-      <input type="file" v-on:change="upload">
+      <v-file-input
+        truncate-length="6"
+      ></v-file-input>
     </div>
   </form>
 </template>
