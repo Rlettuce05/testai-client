@@ -5,6 +5,12 @@
         truncate-length="6"
         @change="onUpload()"
       ></v-file-input>
+      <v-btn
+        color="primary"
+        elevation="2"
+        large
+        @click="callapi()"
+      >Click to send image</v-btn>
     </div>
   </form>
 </template>
@@ -20,6 +26,9 @@ export default {
   methods: {
     onUpload: function() {
       this.images = event.target.files;
+    },
+    callapi: function() {
+      
     }
   }
 }
