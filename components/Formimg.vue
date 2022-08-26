@@ -11,7 +11,17 @@
 
 <script>
 export default {
-  name: "FormImg"
+  name: "FormImg",
+  data: function() {
+    return {
+      images: "",
+    }
+  },
+  methods: {
+    onUpload: function() {
+      this.images = event.target.files;
+    }
+  }
 }
 </script>
 
