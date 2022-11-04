@@ -8,7 +8,7 @@
       outlined
       rounded
     >
-      <v-toolbar-title>Title</v-toolbar-title>
+      <v-toolbar-title>AI画像分類機</v-toolbar-title>
     </v-toolbar>
 
     <v-content>

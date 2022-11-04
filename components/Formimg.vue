@@ -1,7 +1,7 @@
 <template>
   <form>
     <div>
-      <p>Upload png file</p>
+      <p>png only</p>
       <v-file-input
         truncate-length="6"
         accept="image/png"
@@ -46,9 +46,10 @@ export default {
     callapi: function() {
       let formData = new FormData
       formData.append('image', this.images);
-      this.$axios.$post('http://localhost:4000/api/predict',
+      this.$axios.$post('http://127.0.0.1:5042/api/predict',
       formData,
       ).then((response) => {this.$store.commit('setPredictLabel', response.data.result)})
+      .catch((e)=>{console.log(e)})
     }
   }
 }
