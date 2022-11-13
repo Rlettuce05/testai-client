@@ -1,10 +1,8 @@
 <template>
   <form>
     <div>
-      <p>png only</p>
       <v-file-input
         truncate-length="6"
-        accept="image/png"
         @change="roadimg()"
       ></v-file-input>
       <v-btn
@@ -12,10 +10,10 @@
         elevation="2"
         large
         @click="callapi()"
-      >Click to upload</v-btn>
+      >Predict</v-btn>
     </div>
-    <div v-if="this.$store.predictLabel">
-      これは{this.$store.predictLabel}です
+    <div>
+      これは{{this.$store.predictLabel}}です
     </div>
   </form>
 </template>
@@ -56,7 +54,8 @@ export default {
     callapi: function() {
       this.$axios.$post('http://127.0.0.1:5042/api/predict',
       {"img": this.resizedImgData},
-      ).then((response) => {this.$store.commit('setPredictLabel', response.result)})
+      ).then((response) => {this.$store.commit('setPredictLabel', response.result)}
+      ).then(() => {console.log(this.$store.predictLabel)})
     },
     greeting: function() {
       this.$axios.$post('http://127.0.0.1:5042/api/greeting/RLettuce',)
