@@ -12,8 +12,13 @@
         @click="callapi()"
       >Predict</v-btn>
     </div>
+    <v-btn
+      color="primary"
+      elevation="2"
+      @click="greeting()"
+    >Connection test</v-btn>
     <div>
-      これは{{this.$store.predictLabel}}です
+      これは{{this.predictLabel}}です
     </div>
   </form>
 </template>
@@ -24,7 +29,8 @@ export default {
   data: function() {
     return {
       image: "",
-      resizedImgData: ""
+      resizedImgData: "",
+      predictLabel: ""
     }
   },
   methods: {
@@ -54,8 +60,8 @@ export default {
     callapi: function() {
       this.$axios.$post('http://127.0.0.1:5042/api/predict',
       {"img": this.resizedImgData},
-      ).then((response) => {this.$store.commit('setPredictLabel', response.result)}
-      ).then(() => {console.log(this.$store.predictLabel)})
+      ).then((response) => {this.predictLabel = response.result}
+      ).then(() => {console.log(this.predictLabel)})
     },
     greeting: function() {
       this.$axios.$post('http://127.0.0.1:5042/api/greeting/RLettuce',)
