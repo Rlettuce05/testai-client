@@ -1,8 +1,10 @@
 <template>
   <form>
     <div>
+      <p>10種類の画像（飛行機, 自動車, 鳥, 猫, 鹿, 犬, カエル, 馬, 船, トラック）を見分けます</p>
       <v-file-input
         truncate-length="6"
+        accept="image/*"
         @change="roadimg()"
       ></v-file-input>
       <v-btn
@@ -35,7 +37,8 @@ export default {
   },
   methods: {
     roadimg: function(e) {
-      this.image = event.target.files[0]
+      if(event.target.files){
+      this.image = event.target.files[0];
       let reader = new FileReader();
       reader.onload = () => {
         const imgData = reader.result;
@@ -56,6 +59,7 @@ export default {
         }
       }
       reader.readAsDataURL(this.image);
+      }
     },
     callapi: function() {
       this.$axios.$post('http://127.0.0.1:5042/api/predict',
