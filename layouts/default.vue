@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-toolbar
-      app
       dense
       color="green"
       elevation="3"
