@@ -62,13 +62,13 @@ export default {
       }
     },
     callapi: function() {
-      this.$axios.$post('http://127.0.0.1:5042/api/predict',
+      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/predict',
       {"img": this.resizedImgData},
       ).then((response) => {this.predictLabel = response.result}
       ).then(() => {console.log(this.predictLabel)})
     },
     greeting: function() {
-      this.$axios.$post('http://127.0.0.1:5042/api/greeting/RLettuce',)
+      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/greeting/RLettuce',)
       .then((response) => {console.log(response.result)})
     }
   }
