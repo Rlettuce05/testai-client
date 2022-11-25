@@ -19,6 +19,9 @@
       elevation="2"
       @click="greeting()"
     >Connection test</v-btn>
+    <div v-if="this.processing">
+      <h2>実行中です…</h2>
+    </div>
     <div>
       これは{{this.predictLabel}}です
     </div>
@@ -32,7 +35,8 @@ export default {
     return {
       image: "",
       resizedImgData: "",
-      predictLabel: ""
+      predictLabel: "",
+      processing: ""
     }
   },
   methods: {
@@ -62,13 +66,14 @@ export default {
       }
     },
     callapi: function() {
-      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/predict',
+      this.processing = true;
+      this.$axios.$post('http://127.0.0.1:5042/api/predict',
       {"img": this.resizedImgData},
       ).then((response) => {this.predictLabel = response.result}
-      ).then(() => {console.log(this.predictLabel)})
+      ).then(() => {console.log(this.predictLabel); this.processing = false;})
     },
     greeting: function() {
-      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/greeting/RLettuce',)
+      this.$axios.$post('http://127.0.0.1:5042/api/greeting/RLettuce',)
       .then((response) => {console.log(response.result)})
     }
   }
