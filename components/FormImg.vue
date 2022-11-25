@@ -66,11 +66,15 @@ export default {
       }
     },
     callapi: function() {
+      if(this.resizedImgData){
       this.processing = true;
       this.$axios.$post('https://testaiweb-server.herokuapp.com/api/predict',
       {"img": this.resizedImgData},
       ).then((response) => {this.predictLabel = response.result}
       ).then(() => {console.log(this.predictLabel); this.processing = false;})
+      }else{
+        this.predictLabel = "画像がない"
+      }
     },
     greeting: function() {
       this.$axios.$post('https://testaiweb-server.herokuapp.com/api/greeting/RLettuce',)
