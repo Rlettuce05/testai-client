@@ -74,7 +74,7 @@ export default {
     callapi: function() {
       if(this.resizedImgData){
       this.processing = true;
-      this.$axios.$post('http://localhost:5042/api/predict',
+      this.$axios.$post('https://aiserver1-ddce53ae720c.herokuapp.com/api/predict',
       {"img": this.resizedImgData},
       ).then((response) => {this.predictedBase64data = "data:image/png;base64," + response.result.result; this.predictLabel = response.result.label;}
       ).then(() => {console.log(this.predictedBase64data);}
@@ -85,7 +85,7 @@ export default {
       }
     },
     greeting: function() {
-      this.$axios.$post('http://localhost:5042/api/greeting/RLettuce',)
+      this.$axios.$post('https://aiserver1-ddce53ae720c.herokuapp.com/api/greeting/RLettuce',)
       .then((response) => {console.log(response.result)})
     }
   }
