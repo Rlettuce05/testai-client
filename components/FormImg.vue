@@ -1,7 +1,8 @@
 <template>
   <form>
     <div>
-      <p>10種類の画像（飛行機, 自動車, 鳥, 猫, 鹿, 犬, カエル, 馬, 船, トラック）を見分けます.</p>
+      <p>信号を検出し，色を見分けます.</p>
+      <p style="font-size: small">(学習には主にポーランドの画像を用いたため，日本の信号機は(ほぼ検出が不可能なほど)精度が落ちます．)</p>
       <v-file-input
         truncate-length="6"
         accept="image/*"
@@ -14,16 +15,19 @@
         @click="callapi()"
       >Predict</v-btn>
     </div>
+  
     <v-btn
       color="primary"
       elevation="2"
       @click="greeting()"
     >Connection test</v-btn>
+  
     <div v-if="this.processing">
       <h2>実行中です…</h2>
     </div>
-    <div>
-      これは{{this.predictLabel}}です
+    <div v-if="this.result">
+      <img :src="predictedBase64data" alt="result" />
+      <p>予測結果: {{predictLabel}}</p>
     </div>
   </form>
 </template>
@@ -35,8 +39,10 @@ export default {
     return {
       image: "",
       resizedImgData: "",
+      predictedBase64data: "",
+      processing: "",
       predictLabel: "",
-      processing: ""
+      result: ""
     }
   },
   methods: {
@@ -48,8 +54,8 @@ export default {
         const imgData = reader.result;
         console.log(imgData);
         const canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
+        canvas.width = 945;
+        canvas.height = 531;
         const ctx = canvas.getContext('2d');
         var img = new Image();
         img.src = imgData;
@@ -57,7 +63,7 @@ export default {
           var width = img.naturalWidth;
 		      var height = img.naturalHeight;
           console.log(width+","+height);
-          ctx.drawImage(img, 0, 0, width, height, 0, 0, 32, 32);
+          ctx.drawImage(img, 0, 0, width, height, 0, 0, 945, 531);
           this.resizedImgData = canvas.toDataURL('image/png');
           console.log(this.resizedImgData);
         }
@@ -68,16 +74,18 @@ export default {
     callapi: function() {
       if(this.resizedImgData){
       this.processing = true;
-      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/predict',
+      this.$axios.$post('http://localhost:5042/api/predict',
       {"img": this.resizedImgData},
-      ).then((response) => {this.predictLabel = response.result}
-      ).then(() => {console.log(this.predictLabel); this.processing = false;})
+      ).then((response) => {this.predictedBase64data = "data:image/png;base64," + response.result.result; this.predictLabel = response.result.label;}
+      ).then(() => {console.log(this.predictedBase64data);}
+      ).then(() => {this.processing = false; this.result = true;}
+      )
       }else{
-        this.predictLabel = "画像がない"
+        alert("画像を選択してください．");
       }
     },
     greeting: function() {
-      this.$axios.$post('https://testaiweb-server.herokuapp.com/api/greeting/RLettuce',)
+      this.$axios.$post('http://localhost:5042/api/greeting/RLettuce',)
       .then((response) => {console.log(response.result)})
     }
   }
