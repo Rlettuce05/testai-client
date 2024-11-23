@@ -16,11 +16,11 @@
       >Predict</v-btn>
     </div>
   
-    <v-btn
+    <!--<v-btn
       color="primary"
       elevation="2"
       @click="greeting()"
-    >Connection test</v-btn>
+    >Connection test</v-btn>-->
   
     <div v-if="this.processing">
       <h2>実行中です…</h2>
